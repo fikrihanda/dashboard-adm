@@ -5,6 +5,8 @@ export default {
   component: Dashboard,
   meta: {
     requiresAuth: true,
-    layout: 'Home'
+    layout: 'Home',
+    name: 'Dashboard',
+    icon: 'fa-dashboard'
   }
 }

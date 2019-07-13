@@ -1,0 +1,22 @@
+.card {
+  border: {
+    bottom: 0;
+    top: 2px solid transparent;
+    left: 0;
+    right: 0;
+  }
+}
+
+.card-header {
+  border-bottom: 0;
+}
+
+.card-footer {
+  border-top: 0;
+}
+
+@each $color, $value in $theme-colors {
+  .card-#{$color} {
+    border-top-color: $value;
+  }
+}

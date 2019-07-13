@@ -17,7 +17,7 @@ export default {
       return function (id) {
         id = parseInt(id)
         let find =_.find(state.all, {id})
-        if (_.isUndefined(find)) return {}
+        if (_.isUndefined(find)) return
         return find
       }
     },
@@ -53,6 +53,9 @@ export default {
       if (index === -1) return
       state.all.splice(index, 1)
     },
+    deleteAllUsers(state) {
+      state.all = []
+    },
     setAuth(state, auth) {
       state.auth = auth
     },
@@ -71,7 +74,7 @@ export default {
     setUser(state, user) {
       _.forEach(user, function (val, index) {
         if (index === 'name' || index === 'email' || index === 'avatar' || index === 'admin')
-          state[index] = user[index]
+          state[index] = val
       })
     }
   },
@@ -107,12 +110,42 @@ export default {
         return Promise.reject(err)
       }
     },
-    async upload({commit}, field) {
+    async register({commit}, field) {
+      try {
+        await Users.register(field)
+        return Promise.resolve()
+      } catch (err) {
+        return Promise.reject(err)
+      }
+    },
+    async logout({commit, getters}) {
+      try {
+        await Users.logout()
+        if (getters.auth) commit('setAuth', false)
+        commit('setUser', {
+          name: '',
+          email: '',
+          avatar: ''
+        })
+        return Promise.resolve()
+      } catch (err) {
+        return Promise.reject(err)
+      }
+    },
+    async upload({commit, getters}, field) {
       try {
         let avatar = await Users.upload(field)
         commit('setAvatar', avatar)
         return Promise.resolve()
       } catch (err) {
+        if (err.name === 'UserNotFound') {
+          if (getters.auth) commit('setAuth', false)
+          commit('setUser', {
+            name: '',
+            email: '',
+            avatar: ''
+          })
+        }
         return Promise.reject(err)
       }
     },
@@ -122,6 +155,14 @@ export default {
         commit('setUser', profile)
         return Promise.resolve()
       } catch (err) {
+        if (err.name === 'UserNotFound') {
+          if (getters.auth) commit('setAuth', false)
+          commit('setUser', {
+            name: '',
+            email: '',
+            avatar: ''
+          })
+        }
         return Promise.reject(err)
       }
     },
@@ -129,6 +170,22 @@ export default {
       try {
         await Users.updatePassword(field)
         return Promise.resolve()
+      } catch (err) {
+        if (err.name === 'UserNotFound') {
+          if (getters.auth) commit('setAuth', false)
+          commit('setUser', {
+            name: '',
+            email: '',
+            avatar: ''
+          })
+        }
+        return Promise.reject(err)
+      }
+    },
+    async checkUsername({commit}, field) {
+      try {
+        let check = await Users.checkUsername(field)
+        return check
       } catch (err) {
         return Promise.reject(err)
       }

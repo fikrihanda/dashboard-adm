@@ -1,0 +1,24 @@
+.alert {
+  border: {
+    left: 3px solid transparent;
+    right: 0;
+    top: 0;
+    bottom: 0;
+  }
+}
+
+.alert-msg {
+  margin-right: $spacer;
+}
+
+%alert-color {
+  color: white;
+}
+
+@each $color, $value in $theme-colors {
+  .alert-#{$color} {
+    @extend %alert-color;
+    background-color: $value;
+    border-left-color: darken($value, 5);
+  }
+}

@@ -3,7 +3,7 @@ import tools from '@/js/utils/tools'
 export default {
   async session() {
     try {
-      let user = await $.get('/api/auth/session')
+      let user = await $.get('/auth/session')
       return user
     } catch (err) {
       return Promise.reject(
@@ -13,8 +13,28 @@ export default {
   },
   async login(field) {
     try {
-      let user = await $.post('/api/auth/login', field)
+      let user = await $.post('/auth/login', field)
       return user
+    } catch (err) {
+      return Promise.reject(
+        tools.error(err)
+      )
+    }
+  },
+  async register(field) {
+    try {
+      await $.post('/auth/register', field)
+      return Promise.resolve()
+    } catch (err) {
+      return Promise.reject(
+        tools.error(err)
+      )
+    }
+  },
+  async logout() {
+    try {
+      await $.get('/auth/logout')
+      return Promise.resolve()
     } catch (err) {
       return Promise.reject(
         tools.error(err)
@@ -24,7 +44,7 @@ export default {
   async upload(field) {
     try {
       let avatar = await $.post({
-        url: '/api/auth/update',
+        url: '/auth/update',
         data: field,
         processData: false,
         contentType: false
@@ -38,7 +58,7 @@ export default {
   },
   async updateProfile(field) {
     try {
-      let profile = await $.post('/api/auth/update', field)
+      let profile = await $.post('/auth/update', field)
       return profile
     } catch (err) {
       return Promise.reject(
@@ -48,8 +68,21 @@ export default {
   },
   async updatePassword(field) {
     try {
-      await $.post('/api/auth/update', field)
+      await $.post('/auth/update', field)
       return Promise.resolve()
+    } catch (err) {
+      return Promise.reject(
+        tools.error(err)
+      )
+    }
+  },
+  async checkUsername(field) {
+    try {
+      let {username} = field
+      let check = await $.get('/users', {
+        findOne: {username}
+      })
+      return _.isEmpty(check)
     } catch (err) {
       return Promise.reject(
         tools.error(err)
@@ -58,7 +91,7 @@ export default {
   },
   async list() {
     try {
-      let users = await $.get('/api/users')
+      let users = await $.get('/users')
       return users
     } catch (err) {
       return Promise.reject(
@@ -68,7 +101,7 @@ export default {
   },
   async add(field) {
     try {
-      let users = await $.post('/api/users/add', field)
+      let users = await $.post('/users/add', field)
       return users
     } catch (err) {
       return Promise.reject(
@@ -78,7 +111,7 @@ export default {
   },
   async delete(field) {
     try {
-      await $.post('/api/users/delete', field)
+      await $.post('/users/delete', field)
       return Promise.resolve()
     } catch (err) {
       return Promise.reject(

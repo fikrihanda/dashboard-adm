@@ -6,3 +6,8 @@ window.Copper = require('cropperjs')
 
 require('bootstrap')
 require('jquery-cropper')
+
+$.ajaxSetup({
+  cache: false,
+  dataType: 'json'
+})
