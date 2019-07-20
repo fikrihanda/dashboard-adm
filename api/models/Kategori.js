@@ -1,5 +1,9 @@
 module.exports = {
   attributes: {
-    name: 'string'
+    name: 'string',
+    barang: {
+      collection: 'barang',
+      via: 'kategori'
+    }
   }
 }

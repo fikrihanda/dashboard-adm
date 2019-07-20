@@ -1,9 +1,9 @@
-import Kategori from '@/js/components/pages/Kategori'
-import List from '@/js/components/pages/kategori/List'
+import Barang from '@/js/components/pages/Barang'
+import List from '@/js/components/pages/barang/List'
 
 export default {
-  path: '/kategori',
-  component: Kategori,
+  path: '/barang',
+  component: Barang,
   children: [
     {
       path: '',
@@ -11,8 +11,8 @@ export default {
       meta: {
         requiresAuth: true,
         layout: 'Home',
-        name: 'Kategori',
-        icon: 'fa-tags'
+        name: 'Barang',
+        icon: 'fa-archive'
       }
     }
   ],

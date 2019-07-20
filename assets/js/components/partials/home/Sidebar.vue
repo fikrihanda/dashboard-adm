@@ -61,13 +61,18 @@
           },
           {
             name: 'Item',
-            icon: 'fa-archive',
+            icon: 'fa-folder',
             toggle: false,
             subsmenu: [
               {
                 path: '/kategori',
                 icon: 'fa-tags',
                 name: 'Kategori'
+              },
+              {
+                path: '/barang',
+                icon: 'fa-archive',
+                name: 'Barang'
               }
             ]
           }

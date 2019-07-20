@@ -4,13 +4,11 @@
     <div class="home-content">
       <hom-sidebar ref="sidebar"></hom-sidebar>
       <div class="home-container">
-        <h4 class="home-title">
+        <h5 class="home-title">
           <i :class="['fa', 'fa-fw', $route.meta.icon]"></i>
           {{$route.meta.name}}
-        </h4>
-        <div class="container-fluid">
-          <slot></slot>
-        </div>
+        </h5>
+        <slot></slot>
       </div>
     </div>
   </div>

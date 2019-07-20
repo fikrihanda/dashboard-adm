@@ -1,21 +1,23 @@
 <template>
   <div class="card card-primary">
     <div class="card-header d-flex align-items-center">
-      Kategori
+      Barang
       <slot name="modal"></slot>
     </div>
-    <vuetable ref="table"
-              pagination-path="pagination"
-              @vuetable:pagination-data="onPaginationData"
-              :fields="fields"
-              :api-mode="false"
-              :per-page="perPage"
-              :data-manager="dataManager"
-              :css="css.table">
-      <template v-slot:actions="props">
-        <slot name="actions" :row-data="props.rowData"></slot>
-      </template>
-    </vuetable>
+    <div class="table-responsive">
+      <vuetable ref="table"
+                pagination-path="pagination"
+                @vuetable:pagination-data="onPaginationData"
+                :fields="fields"
+                :api-mode="false"
+                :per-page="perPage"
+                :data-manager="dataManager"
+                :css="css.table">
+        <template v-slot:actions="props">
+          <slot name="actions" :row-data="props.rowData"></slot>
+        </template>
+      </vuetable>
+    </div>
     <vue-pagination ref="pagination"
                     @vuetable-pagination:change-page="onChangePage"></vue-pagination>
   </div>
@@ -33,6 +35,21 @@
           {
             name: 'name',
             title: 'Nama',
+            sortField: 'name',
+            titleClass: 'd-flex align-items-center'
+          },
+          {
+            name: 'qty',
+            title: 'Qty'
+          },
+          {
+            name: 'price',
+            title: 'Harga',
+            callback: 'formatPrice'
+          },
+          {
+            name: 'kategori.name',
+            title: 'Kategori',
             sortField: 'name',
             titleClass: 'd-flex align-items-center'
           },
@@ -57,8 +74,8 @@
       VuePagination
     },
     computed: {
-      ...mapGetters('Kategori', {
-        local: 'kategoris'
+      ...mapGetters('Barang', {
+        local: 'barangs'
       })
     },
     watch: {
@@ -90,6 +107,14 @@
       },
       onChangePage(page) {
         this.$refs.table.changePage(page)
+      },
+      formatPrice(val) {
+        let rupiah = ''
+        let valrev = val.toString().split('').reverse().join('')
+        for(let i = 0; i < valrev.length; i++) {
+          if((i % 3) === 0) rupiah += valrev.substr(i, 3) + '.'
+        }
+        return `Rp. ${rupiah.split('', rupiah.length - 1).reverse().join('')}`
       }
     }
   }

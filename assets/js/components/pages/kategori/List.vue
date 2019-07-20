@@ -1,7 +1,7 @@
 <template>
   <div class="row">
     <div class="col-12">
-      <list-table>
+      <kat-table>
         <template v-slot:modal>
           <div class="btn-group btn-group-sm ml-auto">
             <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#kategoriTambah">
@@ -19,64 +19,50 @@
             </button>
           </div>
         </template>
-      </list-table>
-      <list-tambah ref="tambah"></list-tambah>
-      <list-ganti ref="ganti" :kategori="kategori" @delete-kategori="deleteKategori"></list-ganti>
-      <list-hapus ref="hapus" :kategori="kategori" @delete-kategori="deleteKategori"></list-hapus>
+      </kat-table>
+      <kat-tambah ref="tambah"></kat-tambah>
+      <kat-ganti ref="ganti" :kategori="kategoriGanti" @delete-kategori="deleteKategori"></kat-ganti>
+      <kat-hapus ref="hapus" :kategori="kategoriHapus" @delete-kategori="deleteKategori"></kat-hapus>
     </div>
   </div>
 </template>
 
 <script>
-  import ListTable from '@/js/components/partials/kategori/list/Table'
-  import ListTambah from '@/js/components/partials/kategori/list/Tambah'
-  import ListGanti from '@/js/components/partials/kategori/list/Ganti'
-  import ListHapus from '@/js/components/partials/kategori/list/Hapus'
+  import KatTable from '@/js/components/partials/kategori/Table'
+  import KatTambah from '@/js/components/partials/kategori/Tambah'
+  import KatGanti from '@/js/components/partials/kategori/Ganti'
+  import KatHapus from '@/js/components/partials/kategori/Hapus'
 
   export default {
     data() {
       return {
-        kategori: {}
+        kategoriGanti: {},
+        kategoriHapus: {}
       }
     },
     components: {
-      ListTable,
-      ListTambah,
-      ListGanti,
-      ListHapus
+      KatTable,
+      KatTambah,
+      KatGanti,
+      KatHapus
     },
     methods: {
-      async getList() {
-        try {
-          await this.$store.dispatch('Kategori/list')
-        } catch (err) {
-          this.$notify({
-            group: 'alert-group',
-            title: 'Kesalahan',
-            type: 'danger',
-            text: err.message
-          })
-        }
-        return Promise.resolve()
-      },
       modalGanti(data) {
         let kategori = this.$store.getters['Kategori/kategorisFind'](data.id)
         if (_.isEmpty(kategori)) return
-        this.kategori = kategori
+        this.kategoriGanti = kategori
         $(this.$refs.ganti.$el).modal('show')
       },
       modalHapus(data) {
         let kategori = this.$store.getters['Kategori/kategorisFind'](data.id)
         if (_.isEmpty(kategori)) return
-        this.kategori = kategori
+        this.kategoriHapus = kategori
         $(this.$refs.hapus.$el).modal('show')
       },
       deleteKategori() {
-        this.kategori = {}
+        this.kategoriGanti = {}
+        this.kategoriHapus = {}
       }
-    },
-    async mounted() {
-      await this.getList()
     }
   }
 </script>
