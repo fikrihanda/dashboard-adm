@@ -138,6 +138,15 @@
           })
         }
       }
+    },
+    mounted() {
+      $(this.$el).on('hide.bs.modal', () => {
+        this.name = ''
+        this.qty = ''
+        this.price = ''
+        this.kategori = ''
+        this.$v.$reset()
+      })
     }
   }
 </script>

@@ -147,7 +147,7 @@
             type: 'success',
             text: 'Behasil ganti barang'
           })
-        } catch (e) {
+        } catch (err) {
           $(this.$el).modal('hide')
           this.$notify({
             group: 'alert-group',

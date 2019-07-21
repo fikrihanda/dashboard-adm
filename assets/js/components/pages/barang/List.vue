@@ -25,6 +25,7 @@
       </bar-table>
       <bar-tambah ref="tambah"></bar-tambah>
       <bar-ganti ref="ganti" :barang="barangGanti" @delete-barang="deleteBarang"></bar-ganti>
+      <bar-hapus ref="hapus" :barang="barangHapus" @delete-barang="deleteBarang"></bar-hapus>
     </div>
   </div>
 </template>
@@ -33,12 +34,14 @@
   import BarTable from '@/js/components/partials/barang/Table'
   import BarTambah from '@/js/components/partials/barang/Tambah'
   import BarGanti from '@/js/components/partials/barang/Ganti'
+  import BarHapus from '@/js/components/partials/barang/Hapus'
 
   export default {
     components: {
       BarTable,
       BarTambah,
-      BarGanti
+      BarGanti,
+      BarHapus
     },
     data() {
       return {
@@ -52,6 +55,12 @@
         if (_.isEmpty(barang)) return
         this.barangGanti = barang
         $(this.$refs.ganti.$el).modal('show')
+      },
+      modalHapus(data) {
+        let barang = this.$store.getters['Barang/barangsFind'](data.id)
+        if (_.isEmpty(barang)) return
+        this.barangHapus = barang
+        $(this.$refs.hapus.$el).modal('show')
       },
       deleteBarang() {
         this.barangGanti = {}

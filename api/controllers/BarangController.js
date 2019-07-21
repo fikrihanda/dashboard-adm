@@ -25,5 +25,28 @@ module.exports = {
         })
       res.serverError(err)
     }
+  },
+  async update(req, res) {
+    try {
+      if (req.method !== 'POST') return res.notFound()
+      let barang = await BarangSrv.update(req.allParams())
+      res.json(barang)
+    } catch (err) {
+      if (err.name === 'KategoriNotFound')
+        return res.badRequest({
+          name: err.name,
+          message: err.message
+        })
+      res.serverError(err)
+    }
+  },
+  async delete(req, res) {
+    try {
+      if (req.method !== 'POST') return res.notFound()
+      await BarangSrv.delete(req.allParams())
+      res.json({})
+    } catch (err) {
+      res.serverError(err)
+    }
   }
 }
