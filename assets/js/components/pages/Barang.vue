@@ -23,7 +23,7 @@
       }
     },
     async mounted() {
-      this.getList()
+      await this.getList()
     }
   }
 </script>

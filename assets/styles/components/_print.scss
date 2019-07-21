@@ -1,0 +1,11 @@
+.print-well {
+  padding: $btn-padding-x;
+  background-color: $white;
+  border: 1px solid $border-color;
+  margin-bottom: $spacer;
+}
+
+.print-content {
+  width: 100%;
+  height: calc(100vh - ((61.09px + 15px) + (53px + 15px) + 34px) - 15px);
+}

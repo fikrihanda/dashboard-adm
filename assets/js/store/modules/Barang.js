@@ -21,6 +21,16 @@ export default {
         return find
       }
     },
+    barangsFindbyKat(state) {
+      return function (id) {
+        id = parseInt(id)
+        let filter = _.filter(state.all, function (val) {
+          return val.kategori.id === id
+        })
+        if (_.isEmpty(filter)) return
+        return filter
+      }
+    },
     id(state) {
       return state.id
     },
