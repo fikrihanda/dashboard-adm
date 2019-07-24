@@ -75,6 +75,11 @@
                 name: 'Barang'
               }
             ]
+          },
+          {
+            path: '/supplier',
+            name: 'Supplier',
+            icon: 'fa-truck'
           }
         ]
       }
