@@ -129,12 +129,7 @@
         })
       },
       formatPrice(val) {
-        let rupiah = ''
-        let valrev = val.toString().split('').reverse().join('')
-        for(let i = 0; i < valrev.length; i++) {
-          if((i % 3) === 0) rupiah += valrev.substr(i, 3) + '.'
-        }
-        return `Rp. ${rupiah.split('', rupiah.length - 1).reverse().join('')}`
+        return Intl.NumberFormat('id-ID', {style: 'currency', currency: 'IDR'}).format(val)
       }
     },
     mounted() {

@@ -1,9 +1,9 @@
 <template>
-  <form action="#" id="supplierTambah" class="modal fade" @submit.prevent="submitTambah">
+  <form action="#" class="modal fade" @submit.prevent="submitGanti">
     <div class="modal-dialog">
       <div class="modal-content">
         <div class="modal-header">
-          Tambah Supplier
+          Ganti Supplier
         </div>
         <div class="modal-body">
           <div class="form-group">
@@ -95,7 +95,7 @@
         </div>
         <div class="modal-footer">
           <button type="submit" class="btn btn-primary">
-            Tambah
+            Ganti
           </button>
         </div>
       </div>
@@ -107,8 +107,10 @@
   import {required} from 'vuelidate/lib/validators'
 
   export default {
+    props: ['supplier'],
     data() {
       return {
+        id: '',
         name: '',
         street: '',
         phone: [
@@ -148,6 +150,22 @@
         }
       }
     },
+    watch: {
+      supplier(newOne) {
+        if (
+          _.isEmpty(newOne) || (
+            _.isUndefined(newOne.id) || _.isUndefined(newOne.name)
+            || _.isUndefined(newOne.street) || _.isUndefined(newOne.phone)
+            || _.isUndefined(newOne.bank)
+          )
+        ) return
+        this.id = newOne.id
+        this.name = newOne.name
+        this.street = newOne.street
+        this.phone = _.cloneDeep(newOne.phone)
+        this.bank = _.cloneDeep(newOne.bank)
+      }
+    },
     methods: {
       addPhone() {
         this.phone.push({
@@ -167,11 +185,12 @@
       removeBank(idx) {
         this.bank.splice(idx, 1)
       },
-      async submitTambah() {
+      async submitGanti() {
         try {
           this.$v.$touch()
           if (this.$v.$invalid) return
-          await this.$store.dispatch('Supplier/add', {
+          await this.$store.dispatch('Supplier/update', {
+            id: this.id,
             name: this.name,
             street: this.street,
             phone: this.phone,
@@ -182,7 +201,7 @@
             group: 'alert-group',
             title: 'Berhasil',
             type: 'success',
-            text: 'Behasil tambah supplier'
+            text: 'Behasil ganti supplier'
           })
         } catch (err) {
           $(this.$el).modal('hide')
@@ -197,6 +216,7 @@
     },
     mounted() {
       $(this.$el).on('hide.bs.modal', () => {
+        this.$emit('delete-supplier')
         this.name = ''
         this.street = ''
         this.phone = [

@@ -90,6 +90,25 @@ export default {
       } catch (err) {
         return Promise.reject(err)
       }
+    },
+    async update({commit}, field) {
+      try {
+        let supplier = await Supplier.update(field)
+        commit('updateSuppliers', supplier)
+        return Promise.resolve()
+      } catch (err) {
+        return Promise.reject(err)
+      }
+    },
+    async delete({commit}, field) {
+      try {
+        let {id} = field
+        await Supplier.delete(field)
+        commit('deleteSuppliers', id)
+        return Promise.resolve()
+      } catch (err) {
+        return Promise.reject(err)
+      }
     }
   }
 }

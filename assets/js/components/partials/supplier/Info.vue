@@ -16,30 +16,25 @@
               <td>: {{supplier.street}}</td>
             </tr>
             <template v-if="supplier.phone">
-              <template v-if="supplier.phone.length > 1">
-                <tr>
-                  <th :rowspan="supplier.phone.length">
-                    Telepon
-                  </th>
-                  <td>
-                    : {{supplier.phone[0].number}}
-                  </td>
-                </tr>
-                <template v-for="(p, i) in supplier.phone">
-                  <tr v-if="i > 0">
-                    <td>
-                      : {{p.number}}
-                    </td>
-                  </tr>
-                </template>
-              </template>
-              <tr v-else>
-                <th>
+              <tr>
+                <th colspan="2" class="text-center">
                   Telepon
                 </th>
-                <td>
-                  : {{ supplier.phone[0].number }}
-                </td>
+              </tr>
+              <tr v-for="(p, i) in supplier.phone" :key="'p-' + i">
+                <th>{{p.alias}}</th>
+                <td>: {{p.number}}</td>
+              </tr>
+            </template>
+            <template v-if="supplier.bank">
+              <tr>
+                <th colspan="2" class="text-center">
+                  Bank
+                </th>
+              </tr>
+              <tr v-for="(b, i) in supplier.bank" :key="'b-' + i">
+                <th>{{b.alias}}</th>
+                <td>: {{b.number}}</td>
               </tr>
             </template>
           </table>

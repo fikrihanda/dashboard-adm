@@ -43,5 +43,37 @@ module.exports = {
         }, err)
       )
     }
+  },
+  async update(field) {
+    try {
+      let {id, name, street, bank, phone} = field
+      let supplier = await Supplier.updateOne({id}).set({
+        name, street, bank, phone
+      })
+      return supplier
+    } catch (err) {
+      return Promise.reject(
+        ErrorSrv({
+          name: err.name || 'serverError',
+          code: err.code || 'E_SERVER_ERROR',
+          message: err.message || err.detail || 'Server Error'
+        }, err)
+      )
+    }
+  },
+  async delete(field) {
+    try {
+      let {id} = field
+      await Supplier.destroy({id})
+      return Promise.resolve()
+    } catch (err) {
+      return Promise.reject(
+        ErrorSrv({
+          name: err.name || 'serverError',
+          code: err.code || 'E_SERVER_ERROR',
+          message: err.message || err.detail || 'Server Error'
+        }, err)
+      )
+    }
   }
 }

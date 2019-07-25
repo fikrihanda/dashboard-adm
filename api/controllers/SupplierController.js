@@ -16,7 +16,25 @@ module.exports = {
     try {
       if (req.method !== 'POST') return res.notFound()
       let supplier = await SupplierSrv.add(req.allParams())
-      return res.json(supplier)
+      res.json(supplier)
+    } catch (err) {
+      res.serverError(err)
+    }
+  },
+  async update(req, res) {
+    try {
+      if (req.method !== 'POST') return res.notFound()
+      let supplier = await SupplierSrv.update(req.allParams())
+      res.json(supplier)
+    } catch (err) {
+      res.serverError(err)
+    }
+  },
+  async delete(req, res) {
+    try {
+      if (req.method !== 'POST') return res.notFound()
+      await SupplierSrv.delete(req.allParams())
+      res.json({})
     } catch (err) {
       res.serverError(err)
     }
