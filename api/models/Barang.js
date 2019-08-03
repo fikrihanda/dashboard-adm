@@ -5,6 +5,10 @@ module.exports = {
     price: 'number',
     kategori: {
       model: 'kategori'
+    },
+    penbar: {
+      collection: 'penbar',
+      via: 'barang'
     }
   },
   async beforeCreate(valSet, next) {

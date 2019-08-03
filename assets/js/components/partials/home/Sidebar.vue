@@ -80,6 +80,23 @@
             path: '/supplier',
             name: 'Supplier',
             icon: 'fa-truck'
+          },
+          {
+            name: 'Penjualan',
+            icon: 'fa-cart-arrow-down',
+            toggle: false,
+            subsmenu: [
+              {
+                path: '/penjualan',
+                icon: 'fa-table',
+                name: 'List'
+              },
+              {
+                path: '/penjualan/opname',
+                icon: 'fa-box',
+                name: 'Opname'
+              }
+            ]
           }
         ]
       }
