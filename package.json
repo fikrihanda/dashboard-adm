@@ -17,7 +17,7 @@
     "flaverr": "^1.10.0",
     "jquery": "^3.4.1",
     "jquery-cropper": "^1.0.0",
-    "lodash": "^4.17.11",
+    "lodash": "^4.17.21",
     "moment": "^2.24.0",
     "pdfmake": "^0.1.57",
     "popper.js": "^1.15.0",
